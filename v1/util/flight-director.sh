@@ -53,8 +53,8 @@ fi
   -e FD_ALLOW_MARATHON_UNVERIFIED_TLS=`etcdctl get /flight-director/config/allow-marathon-unverified-tls` \
   -e FD_SCALER_PROTOCOL=`etcdctl get /flight-director/config/scaler-protocol` \
   -e FD_SCALER_ENDPOINT=$SCALER_ENDPOINT \
-  -e FD_AQUA_PROTOCOL=AQUA_PROTOCOL \
-  -e FD_AQUA_ENDPOINT=AQUA_ENDPOINT \
-  -e FD_AQUA_USER=AQUA_USER \
-  -e FD_AQUA_PASSWORD=AQUA_PASSWORD \
+  -e FD_AQUA_PROTOCOL=$AQUA_PROTOCOL \
+  -e FD_AQUA_ENDPOINT=$AQUA_ENDPOINT \
+  -e FD_AQUA_USER=$AQUA_USER \
+  -e FD_AQUA_PASSWORD=$AQUA_PASSWORD \
   $IMAGE
