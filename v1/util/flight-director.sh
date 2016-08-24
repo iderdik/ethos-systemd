@@ -9,6 +9,17 @@ then
   SCALER_ENDPOINT=`etcdctl get /flight-director/config/scaler-endpoint`
 fi
 
+#only set Aqua endpoints for FD if Aqua is enabled
+if [[ "$(etcdctl get /environment/services)" == *"aqua"* ]]
+then
+  AQUA_PROTOCOL=`etcdctl get /flight-director/config/aqua-protocol`
+  AQUA_ENDPOINT=`etcdctl get /flight-director/config/aqua-endpoint`
+  AQUA_USER=`etcdctl get /flight-director/config/aqua-user`
+  AQUA_PASSWORD=`etcdctl get /flight-director/config/aqua-password`
+else
+  AQUA_ENDPOINT=""
+fi
+
 
 /usr/bin/docker run \
   --name flight-director \
@@ -42,4 +53,8 @@ fi
   -e FD_ALLOW_MARATHON_UNVERIFIED_TLS=`etcdctl get /flight-director/config/allow-marathon-unverified-tls` \
   -e FD_SCALER_PROTOCOL=`etcdctl get /flight-director/config/scaler-protocol` \
   -e FD_SCALER_ENDPOINT=$SCALER_ENDPOINT \
+  -e FD_AQUA_PROTOCOL=AQUA_PROTOCOL \
+  -e FD_AQUA_ENDPOINT=AQUA_ENDPOINT \
+  -e FD_AQUA_USER=AQUA_USER \
+  -e FD_AQUA_PASSWORD=AQUA_PASSWORD \
   $IMAGE
