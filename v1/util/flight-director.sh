@@ -12,8 +12,11 @@ fi
 #only set Aqua endpoints for FD if Aqua is enabled
 if [[ "$(etcdctl get /environment/services)" == *"aqua"* ]]
 then
-  AQUA_PROTOCOL=`etcdctl get /flight-director/config/aqua-protocol`
-  AQUA_ENDPOINT=`etcdctl get /flight-director/config/aqua-endpoint`
+  AQUA_URL=`etcdctl get /aqua/config/gateway-external`
+  uri_parser($AQUA_URL)
+
+  AQUA_PROTOCOL=$uri_schema
+  AQUA_ENDPOINT=$uri_address
   AQUA_USER=`etcdctl get /flight-director/config/aqua-user`
   AQUA_PASSWORD=`etcdctl get /flight-director/config/aqua-password`
 else
